@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  description: MyText
+  base_hp: 1
+  base_attack: 1
+  base_defense: 1
+  exp_reward: 1
+  min_level: 1
+
+two:
+  name: MyString
+  description: MyText
+  base_hp: 1
+  base_attack: 1
+  base_defense: 1
+  exp_reward: 1
+  min_level: 1

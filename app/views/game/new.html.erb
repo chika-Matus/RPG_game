@@ -1,0 +1,61 @@
+<!-- app/views/game/new.html.erb -->
+<div class="rpg-card p-5 text-center">
+  <h2>🏰 新しい冒険者の登録</h2>
+  <p class="lead">勇敢な冒険者よ、あなたの名前を教えてください。</p>
+  
+  <%= form_with model: @player, url: game_create_player_path, local: true, class: "mt-4" do |form| %>
+    <% if @player.errors.any? %>
+      <div class="alert alert-danger">
+        <ul class="mb-0">
+          <% @player.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    
+    <div class="mb-4">
+      <%= form.label :name, "勇者の名前", class: "form-label fs-5" %>
+      <%= form.text_field :name, class: "form-control form-control-lg", 
+                          placeholder: "あなたの勇者名を入力してください", 
+                          maxlength: 50 %>
+      <div class="form-text">最大50文字まで入力できます</div>
+    </div>
+    
+    <div class="mb-4">
+      <h5>初期ステータス</h5>
+      <div class="row">
+        <div class="col-md-3">
+          <div class="stat-card p-3">
+            <strong>HP</strong><br>
+            100
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="stat-card p-3">
+            <strong>攻撃力</strong><br>
+            15
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="stat-card p-3">
+            <strong>防御力</strong><br>
+            5
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="stat-card p-3">
+            <strong>レベル</strong><br>
+            1
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <%= form.submit "冒険を始める！", class: "btn btn-primary btn-lg px-5" %>
+  <% end %>
+  
+  <div class="mt-3">
+    <%= link_to "トップに戻る", root_path, class: "btn btn-outline-secondary" %>
+  </div>
+</div>

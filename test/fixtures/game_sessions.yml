@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  player: one
+  battle_log: MyText
+  in_battle: false
+  current_enemy_json: MyText
+
+two:
+  player: two
+  battle_log: MyText
+  in_battle: false
+  current_enemy_json: MyText

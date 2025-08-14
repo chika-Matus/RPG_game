@@ -1,0 +1,23 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  level: 1
+  hp: 1
+  max_hp: 1
+  attack: 1
+  defense: 1
+  exp: 1
+  exp_to_next: 1
+  battle_count: 1
+
+two:
+  name: MyString
+  level: 1
+  hp: 1
+  max_hp: 1
+  attack: 1
+  defense: 1
+  exp: 1
+  exp_to_next: 1
+  battle_count: 1

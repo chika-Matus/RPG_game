@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  player: one
+  enemy_name: MyString
+  victory: false
+  exp_gained: 1
+  player_level_before: 1
+  player_level_after: 1
+  battle_summary: MyText
+
+two:
+  player: two
+  enemy_name: MyString
+  victory: false
+  exp_gained: 1
+  player_level_before: 1
+  player_level_after: 1
+  battle_summary: MyText

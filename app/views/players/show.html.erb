@@ -1,0 +1,150 @@
+<!-- app/views/players/show.html.erb -->
+<div class="row">
+  <!-- ステータス表示 -->
+  <div class="col-md-4 mb-4">
+    <div class="rpg-card p-4">
+      <h4>📊 <%= @player.name %> (Lv.<%= @player.level %></h4>
+      
+      <!-- HP バー -->
+      <div class="mb-3">
+        <div class="d-flex justify-content-between">
+          <small>HP</small>
+          <small><%= @player.hp %>/<%= @player.max_hp %></small>
+        </div>
+        <div class="progress">
+          <div class="hp-bar progress-bar" style="width: <%= @player.hp_percentage %>%"></div>
+        </div>
+      </div>
+      
+      <!-- EXP バー -->
+      <div class="mb-3">
+        <div class="d-flex justify-content-between">
+          <small>EXP</small>
+          <small><%= @player.exp %>/<%= @player.exp_to_next %></small>
+        </div>
+        <div class="progress">
+          <div class="exp-bar progress-bar" style="width: <%= @player.exp_percentage %>%"></div>
+        </div>
+      </div>
+      
+      <!-- ステータス -->
+      <div class="row text-center">
+        <div class="col-4">
+          <div class="stat-card p-2 mb-2">
+            <small>攻撃力</small><br>
+            <strong><%= @player.attack %></strong>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="stat-card p-2 mb-2">
+            <small>防御力</small><br>
+            <strong><%= @player.defense %></strong>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="stat-card p-2 mb-2">
+            <small>戦闘回数</small><br>
+            <strong><%= @player.battle_count %></strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- メインコンテンツ -->
+  <div class="col-md-8">
+    <div class="rpg-card p-4 mb-4">
+      <% if @game_session.in_battle? %>
+        <!-- 戦闘中の表示 -->
+        <h4>⚔️ 戦闘中！</h4>
+        
+        <div class="row mb-3">
+          <div class="col-6">
+            <h6><%= @player.name %></h6>
+            <div class="progress">
+              <div class="hp-bar progress-bar" style="width: <%= @player.hp_percentage %>%">
+                HP: <%= @player.hp %>/<%= @player.max_hp %>
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <h6><%= @game_session.current_enemy['name'] %></h6>
+            <% enemy_hp_percent = (@game_session.current_enemy['hp'].to_f / @game_session.current_enemy['max_hp'] * 100).round %>
+            <div class="progress">
+              <div class="hp-bar progress-bar" style="width: <%= enemy_hp_percent %>%">
+                HP: <%= @game_session.current_enemy['hp'] %>/<%= @game_session.current_enemy['max_hp'] %>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- バトルログ -->
+        <div class="battle-log p-3 mb-3">
+          <% @game_session.battle_log.split("\n").each do |line| %>
+            <%= line %><br>
+          <% end %>
+        </div>
+        
+        <!-- 戦闘アクション -->
+        <div class="d-flex gap-2">
+          <%= button_to "⚔️ 攻撃", attack_player_path(@player), method: :post, class: "btn btn-danger" %>
+          <%= button_to "💨 逃げる", flee_player_path(@player), method: :post, class: "btn btn-warning" %>
+        </div>
+      <% else %>
+        <!-- 平常時の表示 -->
+        <h4>🏠 冒険の拠点</h4>
+        <p>次の行動を選択してください。</p>
+        
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <%= button_to "⚔️ 戦闘開始", start_battle_player_path(@player), method: :post, class: "btn btn-primary btn-lg w-100" %>
+          </div>
+          <div class="col-md-6 mb-3">
+            <%= button_to "💤 休息             <!-- filepath: c:\Users\1\Documents\furiRuby\rpg_game\app\views\layouts\application.html.erb -->
+            <div class="text-center mb-4">
+              <h1 class="text-white">🗡️ Rails RPG Game ⚔️</h1>
+              <% if current_player %>
+                <p class="text-white-50">勇者: <%= current_player.name %> (Lv.<%= current_player.level %>)</p>
+              <% end %>
+            </div>(HP回復)", rest_player_path(@player), method: :post, class: "btn btn-success btn-lg w-100" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    
+    <!-- 最近の戦闘履歴 -->
+    <div class="rpg-card p-4">
+      <h5>📜 最近の戦闘履歴</h5>
+      <% if @recent_battles.any? %>
+        <div class="table-responsive">
+          <table class="table table-sm">
+            <thead>
+              <tr>
+                <th>敵</th>
+                <th>結果</th>
+                <th>EXP</th>
+                <th>日時</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @recent_battles.each do |battle| %>
+                <tr>
+                  <td><%= battle.enemy_name %></td>
+                  <td>
+                    <span class="badge bg-<%= battle.result_class %>">
+                      <%= battle.result_text %>
+                    </span>
+                  </td>
+                  <td><%= battle.exp_gained %></td>
+                  <td><%= battle.created_at.strftime("%m/%d %H:%M") %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      <% else %>
+        <p class="text-muted">まだ戦闘履歴がありません。</p>
+      <% end %>
+    </div>
+  </div>
+</div>

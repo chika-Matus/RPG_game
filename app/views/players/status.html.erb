@@ -1,0 +1,75 @@
+<!-- app/views/players/status.html.erb -->
+<div class="rpg-card p-5">
+  <h3>📊 詳細ステータス - <%= @player.name %></h3>
+  
+  <div class="row mt-4">
+    <div class="col-md-6">
+      <h5>基本情報</h5>
+      <table class="table">
+        <tr>
+          <th>名前</th>
+          <td><%= @player.name %></td>
+        </tr>
+        <tr>
+          <th>レベル</th>
+          <td><%= @player.level %></td>
+        </tr>
+        <tr>
+          <th>HP</th>
+          <td><%= @player.hp %>/<%= @player.max_hp %></td>
+        </tr>
+        <tr>
+          <th>攻撃力</th>
+          <td><%= @player.attack %></td>
+        </tr>
+        <tr>
+          <th>防御力</th>
+          <td><%= @player.defense %></td>
+        </tr>
+        <tr>
+          <th>経験値</th>
+          <td><%= @player.exp %>/<%= @player.exp_to_next %></td>
+        </tr>
+        <tr>
+          <th>戦闘回数</th>
+          <td><%= @player.battle_count %></td>
+        </tr>
+      </table>
+    </div>
+    
+    <div class="col-md-6">
+      <h5>戦闘統計</h5>
+      <% victories = @player.battle_logs.victories.count %>
+      <% defeats = @player.battle_logs.defeats.count %>
+      <% total_battles = victories + defeats %>
+      <% win_rate = total_battles > 0 ? (victories.to_f / total_battles * 100).round(1) : 0 %>
+      
+      <table class="table">
+        <tr>
+          <th>総戦闘数</th>
+          <td><%= total_battles %></td>
+        </tr>
+        <tr>
+          <th>勝利数</th>
+          <td class="text-success"><%= victories %></td>
+        </tr>
+        <tr>
+          <th>敗北数</th>
+          <td class="text-danger"><%= defeats %></td>
+        </tr>
+        <tr>
+          <th>勝率</th>
+          <td><%= win_rate %>%</td>
+        </tr>
+        <tr>
+          <th>獲得経験値合計</th>
+          <td><%= @player.battle_logs.sum(:exp_gained) %></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  
+  <div class="mt-4">
+    <%= link_to "戻る", player_path(@player), class: "btn btn-primary" %>
+  </div>
+</div>

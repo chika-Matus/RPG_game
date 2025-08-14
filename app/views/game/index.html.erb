@@ -1,0 +1,13 @@
+<!-- filepath: c:\Users\1\Documents\furiRuby\rpg_game\app\views\game\index.html.erb -->
+<div class="rpg-card p-5 text-center">
+  <h2>🏰 冒険の始まり</h2>
+  <p class="lead">勇敢な冒険者よ、あなたの名前は？</p>
+  
+  <%= form_with scope: :player, url: game_create_player_path, local: true, class: "mt-4" do |form| %>
+    <div class="mb-3">
+      <%= form.label :name, "勇者の名前", class: "form-label" %>
+      <%= form.text_field :name, class: "form-control form-control-lg", placeholder: "勇者の名前を入力" %>
+    </div>
+    <%= form.submit "冒険を始める！", class: "btn btn-primary btn-lg" %>
+  <% end %>
+</div>
